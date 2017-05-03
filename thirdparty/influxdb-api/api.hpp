@@ -8,6 +8,7 @@
 #include <type_traits>
 #include <exception>
 #include <iostream>
+#include <iomanip>
 
 namespace idb
 {
@@ -54,6 +55,7 @@ namespace idb
                 void execute_impl(QueryType query, command::execution_tag::get)
                 {
                     try {
+                        std::cout << "Request get: " << std::quoted(query.request().body()) << "\n";
                         response_handler(m_client.get(query.request()));
                     } catch (...) {
                         std::rethrow_exception(std::current_exception());
@@ -64,6 +66,7 @@ namespace idb
                 void execute_impl(QueryType query, command::execution_tag::post)
                 {
                     try {
+                        std::cout << "Request: " << std::quoted(query.request().body()) << "\n";
                         response_handler(m_client.post(query.request()));
                     } catch (...) {
                         std::rethrow_exception(std::current_exception());
@@ -82,6 +85,8 @@ namespace idb
                         message += response.body();
                         throw std::runtime_error(message);
                     }
+                    else
+                    { std::cout << response.body() << "\n"; }
                 }
         };
     }

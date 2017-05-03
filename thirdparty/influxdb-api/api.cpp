@@ -60,7 +60,7 @@ void    idb::api::api::select(const measurement::measurement &measurement)
 {
     auto    select = command::query(m_base_uri);
     fmt::MemoryWriter statement;
-    statement << "DROP MEASUREMENT " << std::quoted(measurement.name());
+    statement << "SELECT * FROM " << std::quoted(measurement.name());
     select.prepare(m_dbname, statement.str());
     try {
         execute(select);
