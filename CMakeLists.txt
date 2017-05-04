@@ -10,12 +10,9 @@ set(CMAKE_CXX_STANDARD 14)
 
 add_subdirectory(thirdparty/cpp-netlib)
 add_subdirectory(thirdparty/cppformat)
-find_package(cppnetlib)
 add_subdirectory(thirdparty/influxdb-api)
 
-
 include_directories(${influxdb-api_INCLUDE_DIRS})
-include_directories ( ${CPPNETLIB_INCLUDE_DIRS} )
 add_executable(influxdb-api-test
     main.cpp
 )

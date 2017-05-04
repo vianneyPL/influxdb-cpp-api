@@ -5,6 +5,9 @@ set(CMAKE_CXX_STANDARD 14)
 
 find_package(cppnetlib)
 include_directories(${CMAKE_SOURCE_DIR})
+
+# find_path(CPPNETLIB_PATH cppnetlib)
+set(CPPNETLIB_INCLUDE_DIRS ${CPPNETLIB_INCLUDE_DIRS} ../cpp-netlib/deps/asio/asio/include)
 include_directories ( ${CPPNETLIB_INCLUDE_DIRS} )
 add_library(${PROJECT_NAME}
     command/create.hpp
@@ -27,6 +30,8 @@ target_link_libraries(${PROJECT_NAME}
     pthread
 )
 
-set(${PROJECT_NAME}_INCLUDE_DIRS ${CMAKE_CURRENT_SOURCE_DIR}
+set(INCLUDE_DIRS ${CMAKE_CURRENT_SOURCE_DIR} ${CPPNETLIB_INCLUDE_DIRS} thirdparty/cpp-netlib/deps/asio/asio/include)
+
+set(${PROJECT_NAME}_INCLUDE_DIRS ${INCLUDE_DIRS}
     CACHE INTERNAL "${PROJECT_NAME}: Include Directories" FORCE)
 install(FILES ${PROJECT_NAME} DESTINATION lib)
