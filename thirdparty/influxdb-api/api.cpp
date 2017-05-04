@@ -31,6 +31,17 @@ void    idb::api::api::create(const measurement::measurement &mes)
     }
 }
 
+void    idb::api::api::create(const measurement::measurements &mes)
+{
+    auto    create = command::insert(m_base_uri);
+    create.prepare(m_dbname, mes);
+    try {
+        execute(create);
+    } catch (...) {
+        std::rethrow_exception(std::current_exception());
+    }
+}
+
 void    idb::api::api::drop()
 {
     auto    drop = command::drop(m_base_uri);
@@ -55,12 +66,24 @@ void    idb::api::api::drop(const measurement::measurement &measurement)
     }
 }
 
-
 void    idb::api::api::select(const measurement::measurement &measurement)
 {
     auto    select = command::query(m_base_uri);
     fmt::MemoryWriter statement;
     statement << "SELECT * FROM " << std::quoted(measurement.name());
+    select.prepare(m_dbname, statement.str());
+    try {
+        execute(select);
+    } catch (...) {
+        std::rethrow_exception(std::current_exception());
+    }
+}
+
+void    idb::api::api::select(const std::string &what, const std::string &from, const std::string &where)
+{
+    auto    select = command::query(m_base_uri);
+    fmt::MemoryWriter statement;
+    statement << "SELECT " << what << " FROM " << from;
     select.prepare(m_dbname, statement.str());
     try {
         execute(select);

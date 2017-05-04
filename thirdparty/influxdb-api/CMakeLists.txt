@@ -6,7 +6,6 @@ set(CMAKE_CXX_STANDARD 14)
 find_package(cppnetlib)
 include_directories(${CMAKE_SOURCE_DIR})
 
-# find_path(CPPNETLIB_PATH cppnetlib)
 set(CPPNETLIB_INCLUDE_DIRS ${CPPNETLIB_INCLUDE_DIRS} ../cpp-netlib/deps/asio/asio/include)
 include_directories ( ${CPPNETLIB_INCLUDE_DIRS} )
 add_library(${PROJECT_NAME}

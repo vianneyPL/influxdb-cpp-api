@@ -1,5 +1,4 @@
 #include "measurement.hpp"
-
 #include <cppformat/ostream.h>
 
 namespace idb

@@ -8,7 +8,6 @@
 #include <type_traits>
 #include <exception>
 #include <iostream>
-#include <iomanip>
 
 namespace idb
 {
@@ -40,11 +39,13 @@ namespace idb
 
                 void    create();
                 void    create(const measurement::measurement &measurement);
+                void    create(const measurement::measurements &measurements);
 
                 void    drop();
                 void    drop(const measurement::measurement &measurement);
 
                 void    select(const measurement::measurement &measurement);
+                void    select(const std::string &what, const std::string &from, const std::string &where);
 
             private:
                 const std::string   m_base_uri;
@@ -83,6 +84,8 @@ namespace idb
                         message += response.body();
                         throw std::runtime_error(message);
                     }
+                    else
+                    { std::cout << "Response: " << response.body() << "\n"; }
                 }
         };
     }
