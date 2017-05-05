@@ -39,6 +39,9 @@ namespace idb
                     measurement(const measurement &rhs) = default;
                     measurement(measurement &&rhs) = default;
 
+                    measurement &operator=(const measurement &) = default;
+                    measurement &operator=(measurement &&) = default;
+
                     measurement&    operator<<(const tag &t);
                     measurement&    operator<<(tag &&t);
 
@@ -51,16 +54,12 @@ namespace idb
                     measurement&    operator<<(idb_time_t &&t);
 
                     inline const std::string &line() const;
-
                     inline const std::string &name() const;
 
                 private:
-                    WritingState    m_state;
-                    std::string     m_name;
-                    std::string     m_line;
-
-                    inline void quoted(const std::string &to_quote);
-                    inline void quoted(std::string &&to_quote);
+                    WritingState        m_state;
+                    std::string         m_line;
+                    const std::string   m_name;
             };
 
             template <typename FieldType>
