@@ -3,6 +3,7 @@ project(influxdb-api-main)
 enable_testing()
 
 set(CMAKE_CXX_STANDARD 14)
+SET( CMAKE_CXX_FLAGS  "${CMAKE_CXX_FLAGS} -O3")
 
 # set(Boost_USE_STATIC_LIBS ON)
 # find_package(Boost COMPONENTS regex system thread)
