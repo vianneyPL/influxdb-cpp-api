@@ -77,7 +77,7 @@ int main(int argc, char *argv[])
                std::chrono::steady_clock::now() - start).count();
         std::cout << "Took " << end << " milliseconds" << std::endl;
 
-        idb.select("MEAN(\"double_value\")", "\"test\"", "");
+        idb.select("MEAN(\"double_value\")", "\"test\"");
         std::cout << std::setprecision(10) << "result should be: " << taken.second.second << "\n";
 
         // idb.drop(mes);
