@@ -2,7 +2,6 @@
 
 #include "measurement/field.hpp"
 #include "measurement/tag.hpp"
-
 #include <memory>
 #include <stdexcept>
 #include <string>
@@ -55,6 +54,7 @@ public:
     measurement & operator<<(idb_time_t && t);
 
     inline const std::string & line() const;
+
     inline const std::string & name() const;
 
 private:

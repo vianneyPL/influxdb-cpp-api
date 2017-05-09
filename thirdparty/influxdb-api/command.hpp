@@ -2,10 +2,8 @@
 
 #include "measurement.hpp"
 #include "measurements.hpp"
-
 #include <boost/network/protocol/http/client.hpp>
 #include <boost/network/uri.hpp>
-
 #include <utility>
 
 namespace idb

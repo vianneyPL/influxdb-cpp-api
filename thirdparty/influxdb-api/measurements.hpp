@@ -1,7 +1,6 @@
 #pragma once
 
 #include "measurement.hpp"
-
 #include <string>
 
 namespace idb
@@ -15,9 +14,10 @@ class measurements
 public:
     measurements() = default;
 
-    measurements(const measurements & rhs) : m_line(rhs.m_line)
-    {
-    }
+    measurements(const measurements &) = default;
+    measurements(measurements &&) = default;
+    measurements &operator=(const measurements &) = default;
+    measurements &operator=(measurements &&) = default;
 
     inline measurements & operator<<(const measurement & t);
     inline measurements & operator<<(measurement && t);

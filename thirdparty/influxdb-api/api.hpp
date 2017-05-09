@@ -1,10 +1,8 @@
 #pragma once
 
 #include "command.hpp"
-
 #include <boost/network/protocol/http/client.hpp>
 #include <boost/network/uri/uri_io.hpp>
-
 #include <exception>
 #include <iostream>
 #include <type_traits>
