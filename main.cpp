@@ -1,9 +1,9 @@
 #include "api.hpp"
 
-#include <string>
 #include <chrono>
 #include <iomanip>
 #include <random>
+#include <string>
 
 using api = idb::api::api;
 using tag = idb::api::measurement::tag;
@@ -13,56 +13,53 @@ using int_field = idb::api::measurement::field<int>;
 using measurement = idb::api::measurement::measurement;
 using measurements = idb::api::measurement::measurements;
 
-
-
 // need C++14 for auto lambda parameters
-auto timing = [](auto && F, auto && ... params)
-{
+auto timing = [](auto && F, auto &&... params) {
     auto start = std::chrono::steady_clock::now();
-    auto f_result = std::forward<decltype(F)>(F)
-                        (std::forward<decltype(params)>(params)...); // execute the function
-    return std::make_pair(std::chrono::duration_cast<std::chrono::milliseconds>(
-               std::chrono::steady_clock::now() - start).count(), f_result);
+    auto f_result = std::forward<decltype(F)>(F)(std::forward<decltype(params)>(params)...); // execute the function
+    return std::make_pair(
+        std::chrono::duration_cast<std::chrono::milliseconds>(std::chrono::steady_clock::now() - start).count(),
+        f_result);
 };
 
-std::pair<measurements, double>    generateMeasures(std::size_t number_of_points)
+std::pair<measurements, double> generateMeasures(std::size_t number_of_points)
 {
     static std::random_device rd;
-        measurements measures;
+    measurements measures;
 
-        std::vector<std::pair<double, idb_time_t>> points(number_of_points);
+    std::vector<std::pair<double, idb_time_t>> points(number_of_points);
 
-        idb_time_t cursor = 1490206139;
+    idb_time_t cursor = 1490206139;
 
-        std::generate(points.begin(), points.end(), [&cursor]()
-        {
-            return std::make_pair(static_cast<double>(cursor), cursor++);
-        });
+    std::generate(points.begin(), points.end(),
+                  [&cursor]() { return std::make_pair(static_cast<double>(cursor), cursor++); });
 
-        double sum = 0.0;
+    double sum = 0.0;
 
-        // auto range = std::make_pair(points.front().second, points.back().second);
+    // auto range = std::make_pair(points.front().second, points.back().second);
 
-        for (const auto &point : points)
-        {
-            sum += point.first;
-            measurement mes("test");
-            mes << double_field("double_value", point.first)
-                << point.second;
-            measures << mes;
-        }
-        sum /= points.size();
+    for (const auto & point : points)
+    {
+        sum += point.first;
+        measurement mes("test");
+        mes << double_field("double_value", point.first) << point.second;
+        measures << mes;
+    }
+    sum /= points.size();
 
-        return std::make_pair(measures, sum);
+    return std::make_pair(measures, sum);
 }
 
-int main(int argc, char *argv[])
+int main(int argc, char * argv[])
 {
-    try {
-        api idb("http://localhost:8086", "benchmark");
+    try
+    {
+        api idb;
 
-        idb.drop();
-        idb.create();
+        idb = api("http://localhost:8086", "benchmark");
+
+        idb.dropDatabase();
+        idb.createDatabase();
 
         measurements measures;
 
@@ -70,20 +67,20 @@ int main(int argc, char *argv[])
 
         std::cout << "Took " << taken.first << " milliseconds" << std::endl;
         measures = taken.second.first;
-        
+
         auto start = std::chrono::steady_clock::now();
         idb.create(measures);
-        auto end = std::chrono::duration_cast<std::chrono::milliseconds>(
-               std::chrono::steady_clock::now() - start).count();
+        auto end =
+            std::chrono::duration_cast<std::chrono::milliseconds>(std::chrono::steady_clock::now() - start).count();
         std::cout << "Took " << end << " milliseconds" << std::endl;
 
         idb.select("MEAN(\"double_value\")", "\"test\"");
         std::cout << std::setprecision(10) << "result should be: " << taken.second.second << "\n";
 
         // idb.drop(mes);
-        
     }
-    catch (std::exception &e) {
+    catch (std::exception & e)
+    {
         std::cerr << e.what() << std::endl;
         return 1;
     }
