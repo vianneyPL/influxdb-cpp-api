@@ -7,8 +7,7 @@ add_compile_options("-O3")
 find_package(cppnetlib)
 include_directories(${CMAKE_SOURCE_DIR})
 
-set(CPPNETLIB_INCLUDE_DIRS ${CPPNETLIB_INCLUDE_DIRS} ${CMAKE_SOURCE_DIR}/thirdparty/cpp-netlib/deps/asio/asio/include)
-include_directories(${CPPNETLIB_INCLUDE_DIRS})
+include_directories(${CPR_INCLUDE_DIRS})
 add_library(${PROJECT_NAME}
     command/create.hpp
     command/drop.hpp
@@ -24,16 +23,13 @@ add_library(${PROJECT_NAME}
 )
 
 target_link_libraries(${PROJECT_NAME}
-    cppnetlib-client-connections
-    cppnetlib-uri
+    ${CPR_LIBRARIES}
     cppformat
-    pthread
 )
 
 set(INCLUDE_DIRS
     ${CMAKE_CURRENT_SOURCE_DIR}
-    ${CPPNETLIB_INCLUDE_DIRS}
-    ${CMAKE_SOURCE_DIR}/thirdparty/cpp-netlib/deps/asio/asio/include
+    ${CPR_INCLUDE_DIRS}
 )
 
 set(${PROJECT_NAME}_INCLUDE_DIRS ${INCLUDE_DIRS}

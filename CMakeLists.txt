@@ -9,7 +9,7 @@ add_compile_options("-O3")
 # find_package(Boost COMPONENTS regex system thread)
 # find_package(Threads)
 
-add_subdirectory(thirdparty/cpp-netlib)
+add_subdirectory(thirdparty/cpr)
 add_subdirectory(thirdparty/cppformat)
 add_subdirectory(thirdparty/influxdb-api)
 

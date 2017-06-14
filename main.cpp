@@ -1,5 +1,6 @@
 #include "api.hpp"
 
+#include <algorithm>
 #include <chrono>
 #include <iomanip>
 #include <random>
@@ -30,7 +31,6 @@ std::pair<measurements, double> generateMeasures(std::size_t number_of_points)
     std::vector<std::pair<double, idb_time_t>> points(number_of_points);
 
     idb_time_t cursor = 1490206139;
-
     std::generate(points.begin(), points.end(),
                   [&cursor]() { return std::make_pair(static_cast<double>(cursor), cursor++); });
 
@@ -61,21 +61,31 @@ int main(int argc, char * argv[])
         idb.dropDatabase();
         idb.createDatabase();
 
-        measurements measures;
+        idb_time_t timestamp = 1490206139;
+        measurement mes("test");
+        mes << double_field("double_value", 3.2) << timestamp;
+        idb.insert(mes);
 
-        auto taken = timing(generateMeasures, 1'000'000);
+        // measurements measures;
 
-        std::cout << "Took " << taken.first << " milliseconds" << std::endl;
-        measures = taken.second.first;
+        // auto taken = timing(generateMeasures, 1'000);
 
-        auto start = std::chrono::steady_clock::now();
-        idb.create(measures);
-        auto end =
-            std::chrono::duration_cast<std::chrono::milliseconds>(std::chrono::steady_clock::now() - start).count();
-        std::cout << "Took " << end << " milliseconds" << std::endl;
+        // std::cout << "Took " << taken.first << " milliseconds" << std::endl;
+        // measures = taken.second.first;
 
-        idb.select("MEAN(\"double_value\")", "\"test\"");
-        std::cout << std::setprecision(10) << "result should be: " << taken.second.second << "\n";
+        // {
+        //     std::cout << ":: start ::\n";
+        //     auto start = std::chrono::steady_clock::now();
+        //     idb.insert(measures);
+        //     auto end =
+        //         std::chrono::duration_cast<std::chrono::milliseconds>(std::chrono::steady_clock::now() -
+        //         start).count();
+        //     std::cout << "Took " << end << " milliseconds" << std::endl;
+        //     std::cout << ":: end ::\n";
+        // }
+
+        // idb.select("MEAN(\"double_value\")", "\"test\"");
+        // std::cout << std::setprecision(10) << "result should be: " << taken.second.second << "\n";
 
         // idb.drop(mes);
     }
