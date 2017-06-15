@@ -11,6 +11,7 @@ namespace command
 class create : public command<create>
 {
 public:
+    using tag = execution_tag::post;
     create(const std::string & base_uri) : command(base_uri)
     {
     }

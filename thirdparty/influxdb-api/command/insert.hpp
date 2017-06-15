@@ -24,23 +24,17 @@ public:
     {
         auto line = measurement.line();
         auto body = cpr::Body{line};
-        auto header = cpr::Header{{"Content-Length", std::to_string(line.size())}};
         auto parameters = cpr::Parameters{{"db", dbname}};
-        std::cout << "body: " << body << "\n";
-        m_request->SetOption(header);
         m_request->SetOption(parameters);
-        m_request->SetOption(body);
+        m_request->SetBody(body);
     }
     inline void prepareStatement(const std::string & dbname, const measurement::measurements & measurements)
     {
         auto line = measurements.line();
-        auto body = cpr::Body(line);
-        auto header = cpr::Header{{"Content-Length", std::to_string(line.size())}};
+        auto body = cpr::Body{line};
         auto parameters = cpr::Parameters{{"db", dbname}};
-        std::cout << "body s: " << body << "\n";
-        m_request->SetOption(header);
         m_request->SetOption(parameters);
-        m_request->SetOption(body);
+        m_request->SetBody(body);
     }
 };
 }

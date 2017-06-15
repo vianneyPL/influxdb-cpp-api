@@ -11,6 +11,7 @@ namespace command
 class drop : public command<drop>
 {
 public:
+    using tag = execution_tag::post;
     drop(const std::string & base_uri) : command(base_uri)
     {
     }

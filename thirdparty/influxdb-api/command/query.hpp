@@ -21,7 +21,7 @@ public:
     }
     inline void prepareStatement(const std::string & dbname, const std::string & statement)
     {
-        auto parameters = cpr::Parameters{{"q", statement}};
+        auto parameters = cpr::Parameters{{"db", dbname}, {"q", statement}};
         m_request->SetOption(parameters);
     }
 };

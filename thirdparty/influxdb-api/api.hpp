@@ -93,10 +93,6 @@ private:
             }
             throw std::runtime_error(response.text);
         }
-        else
-        {
-            std::cout << "Response: " << response.text << "\n";
-        }
     }
 };
 }
