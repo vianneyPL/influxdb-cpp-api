@@ -1,0 +1,3 @@
+[submodule "thirdparty/cpr"]
+	path = thirdparty/cpr
+	url = git@github.com:vianneyPL/cpr.git
