@@ -1,5 +1,4 @@
-git submodule init
-git submodule update
+git submodule update --init --recursive
 # cp -R thirdparty/cpp-netlib/deps/asio/asio/include/asio* /usr/local/include/.
 mkdir -p build
 cd build
