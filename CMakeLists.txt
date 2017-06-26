@@ -21,3 +21,5 @@ add_executable(influxdb-api-test
 target_link_libraries(influxdb-api-test
     influxdb-api
 )
+
+set(CMAKE_EXPORT_COMPILE_COMMANDS true)
